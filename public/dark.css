@@ -1,0 +1,146 @@
+/* 由 scripts/gen-dark-theme.py 自动生成，请勿手改；手动微调请写在 scripts/dark-tweaks.css */
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="dark"]{--paper:#171614;--white:#1f1f1b;--ink:#d5d9d2;--muted:#a9ada4;--line:#343530;--soft:#1d1c18}
+:root[data-theme="dark"] .breadcrumb{color:#a0a499}
+:root[data-theme="dark"] .breadcrumb span{color:#8e9187}
+:root[data-theme="dark"] .breadcrumb strong{color:#bbc2b4}
+:root[data-theme="dark"] .private-pill{border:1px solid #33372d;color:#a8bb9c}
+:root[data-theme="dark"] .eyebrow{color:#a2a89c}
+:root[data-theme="dark"] .hero-text>p{color:#a6ac9f}
+:root[data-theme="dark"] .text-button{color:#aeb4a4}
+:root[data-theme="dark"] .hero-art{background-image:linear-gradient(#22231c 1px,transparent 1px),linear-gradient(90deg,#22231c 1px,transparent 1px)}
+:root[data-theme="dark"] .art-circle{border:1px solid #c9d7c1}
+:root[data-theme="dark"] .stat:hover{background:#181915}
+:root[data-theme="dark"] .stat>span{color:#a7af9e}
+:root[data-theme="dark"] .stat i{color:#a0aa96}
+:root[data-theme="dark"] .stat small{color:#9ba091}
+:root[data-theme="dark"] .checked-label{color:#a0a798}
+:root[data-theme="dark"] .checked-label>span{background:#455337}
+:root[data-theme="dark"] .outline{border:1px solid #363830}
+:root[data-theme="dark"] .outline:hover{border-color:#3f4536;background:#191a14}
+:root[data-theme="dark"] .browse-tabs>button{color:#a4ab9a}
+:root[data-theme="dark"] .tab-note{color:#9a9f92}
+:root[data-theme="dark"] .filters{background:#1b1b16;border:1px solid #33342d}
+:root[data-theme="dark"] .filter-heading{border-bottom:1px solid #33352d}
+:root[data-theme="dark"] .filter-heading strong span{color:#929c83}
+:root[data-theme="dark"] .filter-heading .text-button{color:#a0ab8f}
+:root[data-theme="dark"] .field>span,:root[data-theme="dark"] .label-text{color:#aeb8a3}
+:root[data-theme="dark"] .label-text small{color:#989d8f}
+:root[data-theme="dark"] select,:root[data-theme="dark"] input[type=date]{border:1px solid #34362e;color:#b7c3ad}
+:root[data-theme="dark"] .filter-group{border-bottom:1px solid #33352d}
+:root[data-theme="dark"] .tag-option{border:1px solid #33362d;color:#a4ad97;background:#151611}
+:root[data-theme="dark"] .tag-option.active{background:#6c7864;border-color:#b5c7a9}
+:root[data-theme="dark"] .check{color:#abb79d}
+:root[data-theme="dark"] .check input{accent-color:#aac099}
+:root[data-theme="dark"] .field-hint{color:#99a18e}
+:root[data-theme="dark"] .error{color:#e9796a}
+:root[data-theme="dark"] .filter-note{border-top:1px dashed #35392d;color:#9ba58c}
+:root[data-theme="dark"] .search svg{color:#9ca491}
+:root[data-theme="dark"] .search input{color:#b8c3af}
+:root[data-theme="dark"] .search:focus-within{border-color:#434c37}
+:root[data-theme="dark"] .search input::placeholder{color:#959b89}
+:root[data-theme="dark"] .results-meta{color:#9ba491}
+:root[data-theme="dark"] .results-meta p strong{color:#b7c5a9}
+:root[data-theme="dark"] .results-meta>span{color:#959b88}
+:root[data-theme="dark"] .filter-chip{border:1px solid #33372c;background:#181a14;color:#a2af93}
+:root[data-theme="dark"] .notice{background:#1d1b13;border:1px solid #393428;color:#b5a281}
+:root[data-theme="dark"] .event-card{border:1px solid #33352d}
+:root[data-theme="dark"] .event-card:hover{border-color:#393f2f}
+:root[data-theme="dark"] .card-art{background:#1f1e18}
+:root[data-theme="dark"] .card-art.red{background:#281e18}
+:root[data-theme="dark"] .card-art.blue{background:#1e2121}
+:root[data-theme="dark"] .card-art.green{background:#1d2117}
+:root[data-theme="dark"] .card-art.yellow{background:#241e0d}
+:root[data-theme="dark"] .card-code{color:#bdb297}
+:root[data-theme="dark"] .card-symbol{color:#d5886c}
+:root[data-theme="dark"] .blue .card-symbol{color:#93acb8}
+:root[data-theme="dark"] .green .card-symbol{color:#a0b188}
+:root[data-theme="dark"] .yellow .card-symbol{color:#b39d5a}
+:root[data-theme="dark"] .bookmark{background:#11100ed6;color:#a9ab98}
+:root[data-theme="dark"] .badge{border:1px solid #33362c;color:#a5b597;background:#171a14}
+:root[data-theme="dark"] .badge.amber{color:#bba47c;border-color:#3a3326;background:#191610}
+:root[data-theme="dark"] .badge.gray{background:#181916;color:#9ca491;border-color:#32342d}
+:root[data-theme="dark"] .badge.red{color:#de826f;background:#1d1815;border-color:#3c322c}
+:root[data-theme="dark"] .card-subtitle{color:#9ba28f}
+:root[data-theme="dark"] .card-tags{color:#a2ad94}
+:root[data-theme="dark"] .card-tags span:before{color:#929b84}
+:root[data-theme="dark"] .date-line{border-top:1px solid #30312d;border-bottom:1px solid #30312d}
+:root[data-theme="dark"] .date-line .date{color:#aebca0}
+:root[data-theme="dark"] .date-line .remaining{color:#9aa48c}
+:root[data-theme="dark"] .process-line{color:#a3b392}
+:root[data-theme="dark"] .process-line .uncertain{color:#b39d75}
+:root[data-theme="dark"] .process-line .required{color:#dd826d}
+:root[data-theme="dark"] .reason{color:#a0ac93;background:#161712}
+:root[data-theme="dark"] .reason span{color:#a2b891}
+:root[data-theme="dark"] .card-caution{color:#b99f79}
+:root[data-theme="dark"] .card-actions{border-top:1px solid #31332d}
+:root[data-theme="dark"] .compare-toggle{color:#9eab8d}
+:root[data-theme="dark"] .compare-toggle input{accent-color:#aac099}
+:root[data-theme="dark"] .detail-button{color:#abc29c}
+:root[data-theme="dark"] .source-link{color:#99a58b}
+:root[data-theme="dark"] .empty{border:1px dashed #34392c;background:#181914}
+:root[data-theme="dark"] .empty>span{color:#919e80}
+:root[data-theme="dark"] .empty p{color:#9aa589}
+:root[data-theme="dark"] .footer{color:#959b87}
+:root[data-theme="dark"] .footer .text-button{color:#99a489}
+:root[data-theme="dark"] .compare-tray{border:1px solid #aac09b}
+:root[data-theme="dark"] .tray-item{background:#6d7867;border:1px solid #abbd9e}
+:root[data-theme="dark"] .tray-item button{color:#879578}
+:root[data-theme="dark"] .tray-go{background:#1c1f0e}
+:root[data-theme="dark"] .tray-clear{color:#879878}
+:root[data-theme="dark"] dialog{border:1px solid #33372d}
+:root[data-theme="dark"] dialog::backdrop{background:#1e271e85}
+:root[data-theme="dark"] .icon-button{color:#96a78a;border:1px solid #33372d}
+:root[data-theme="dark"] .summary-field small{color:#98a48c}
+:root[data-theme="dark"] .detail-section p,:root[data-theme="dark"] .detail-section li{color:#9eae92}
+:root[data-theme="dark"] .evidence{background:#191c14;border:1px solid #32362b;color:#a0b58d}
+:root[data-theme="dark"] .evidence .small{color:#98a789}
+:root[data-theme="dark"] .warning-box{background:#1f1a12;border:1px solid #3b3426}
+:root[data-theme="dark"] .warning-box li{color:#b79f78}
+:root[data-theme="dark"] .evidence-source strong{color:#abc29b}
+:root[data-theme="dark"] .evidence-source small{color:#96a489}
+:root[data-theme="dark"] .evidence-source code{color:#909a85}
+:root[data-theme="dark"] .primary:hover{background:#6b7762}
+:root[data-theme="dark"] .compare-table th,:root[data-theme="dark"] .compare-table td{border-bottom:1px solid #32352c;border-right:1px solid #32352c}
+:root[data-theme="dark"] .compare-table th:first-child{background:#1a1b15;color:#9bab8b}
+:root[data-theme="dark"] .compare-table thead th{background:#1b1d15;color:#abc19d}
+:root[data-theme="dark"] .compare-table small{color:#96a388}
+:root[data-theme="dark"] .compare-table a{color:#a2ba93}
+:root[data-theme="dark"] .compare-table .bad{color:#e08066}
+:root[data-theme="dark"] .compare-table .wait{color:#b39e76}
+:root[data-theme="dark"] .method-copy p{color:#9eab91}
+:root[data-theme="dark"] .method-copy strong{color:#afc5a1}
+:root[data-theme="dark"] .simple-notice{color:#9dac8f;background:#191b15;border:1px solid #32362a}
+:root[data-theme="dark"] .catalog-intro p{color:#97a48a}
+:root[data-theme="dark"] .catalog-intro small{color:#909c83}
+:root[data-theme="dark"] .file-icon{background:#1b1d16;border:1px solid #33392b;color:#9baf88}
+:root[data-theme="dark"] .catalog-rules strong{color:#9fb58d}
+:root[data-theme="dark"] .catalog-rules small{color:#95a185}
+:root[data-theme="dark"] .catalog-table th{color:#96a888;background:#191c14}
+:root[data-theme="dark"] .catalog-table td:nth-child(1),:root[data-theme="dark"] .catalog-table td:last-child{color:#93a780}
+:root[data-theme="dark"] .catalog-table td:nth-child(4){color:#96a487}
+:root[data-theme="dark"] .calendar-month{color:#9aac8c}
+:root[data-theme="dark"] .calendar-date small{color:#92a082}
+:root[data-theme="dark"] .calendar-row p{color:#92a280}
+:root[data-theme="dark"] .calendar-actions button{color:#a1b78f}
+:root[data-theme="dark"] .monitor-summary{border:1px solid #32372c;background:#181b14}
+:root[data-theme="dark"] .monitor-summary p{color:#98a789}
+:root[data-theme="dark"] .updates-tabs button{border:1px solid #32372c;color:#95a884}
+:root[data-theme="dark"] .updates-tabs button.active{background:#6c7864;border-color:#b5c7a9}
+:root[data-theme="dark"] .update-row p{color:#96a886}
+:root[data-theme="dark"] .update-row a{color:#9fb68f}
+:root[data-theme="dark"] .update-row time{color:#909e81}
+:root[data-theme="dark"] .update-row .quote{border-left:2px solid #31362b;color:#919e82}
+:root[data-theme="dark"] .old-value{color:#8f9d80}
+:root[data-theme="dark"] .update-row strong{color:#89aa72}
+/* ---- dark-tweaks ---- */
+/* 夜间模式手动微调（会被追加到自动生成的 public/dark.css 末尾） */
+/* 以“墨色”为底的按钮：夜间墨色变浅，文字改成深色 */
+:root[data-theme="dark"] .primary,:root[data-theme="dark"] .bookmark[aria-pressed=true],:root[data-theme="dark"] .skip{color:var(--paper)}
+:root[data-theme="dark"] .primary:hover{background:#fff}
+/* 首屏插画：坐标线提亮，墨绿半圆稍提亮以免糊进背景 */
+:root[data-theme="dark"] .art-axis{background:#c9d1c1}
+:root[data-theme="dark"] .art-slice{background:#4a6450}
+/* 左侧导航当前项：降一点亮度，夜里不刺眼 */
+:root[data-theme="dark"] .nav-item.active{background:#d9dccb}
+

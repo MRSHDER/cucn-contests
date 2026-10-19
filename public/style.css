@@ -38,3 +38,16 @@
 #browser-view:not([hidden]),#calendar-view:not([hidden]),#updates-view:not([hidden]),#catalog-view:not([hidden]){animation:fade .45s ease}
 dialog[open]{animation:dialog-in .32s var(--ease)}
 dialog[open]::backdrop{animation:fade .3s ease}
+
+/* ===== 白天 / 夜间切换按钮 ===== */
+.theme-toggle{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--ink);background:var(--white);transition:border-color .2s,transform .3s var(--ease,ease)}
+.theme-toggle:hover{border-color:var(--accent);transform:rotate(-12deg)}
+.theme-toggle svg{width:17px;height:17px;overflow:visible}
+.theme-toggle .sun-core{transition:r .5s var(--ease,ease)}
+.theme-toggle .moon-cut{transition:cx .5s var(--ease,ease),cy .5s var(--ease,ease)}
+.theme-toggle .sun-rays{transform-origin:12px 12px;transition:transform .5s var(--ease,ease),opacity .3s}
+:root[data-theme="dark"] .theme-toggle .sun-core{r:8px}
+:root[data-theme="dark"] .theme-toggle .moon-cut{cx:17px;cy:7px}
+:root[data-theme="dark"] .theme-toggle .sun-rays{transform:rotate(90deg) scale(.4);opacity:0}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+.theme-switching *{transition:none!important}

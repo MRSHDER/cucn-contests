@@ -1,0 +1,9 @@
+/* 夜间模式手动微调（会被追加到自动生成的 public/dark.css 末尾） */
+/* 以“墨色”为底的按钮：夜间墨色变浅，文字改成深色 */
+:root[data-theme="dark"] .primary,:root[data-theme="dark"] .bookmark[aria-pressed=true],:root[data-theme="dark"] .skip{color:var(--paper)}
+:root[data-theme="dark"] .primary:hover{background:#fff}
+/* 首屏插画：坐标线提亮，墨绿半圆稍提亮以免糊进背景 */
+:root[data-theme="dark"] .art-axis{background:#c9d1c1}
+:root[data-theme="dark"] .art-slice{background:#4a6450}
+/* 左侧导航当前项：降一点亮度，夜里不刺眼 */
+:root[data-theme="dark"] .nav-item.active{background:#d9dccb}
