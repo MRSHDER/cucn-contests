@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {events,catalog} from '../public/data.mjs';
+import {filterEvents,rankEvents,statusOf} from '../public/core.mjs';
+const now=new Date('2026-10-18T06:13:46+08:00');
+const mine={status:'open',individual:'yes',online:'yes',travel:'no',excludeObserved:true,includeUnknown:true};
+test('实际数据：主动选择个人、免外出与隐藏观察目录后保留两项',()=>assert.deepEqual(rankEvents(filterEvents(events,mine,now),'match',now).map(e=>e.id),['silk21','huacan26']));
+test('实际数据：明确需要决赛答辩的老字号专项在免外出筛选中排除',()=>assert.ok(!filterEvents(events,{travel:'no',includeUnknown:true},now).some(e=>e.id==='guochao21')));
+test('实际数据：免寄送排除终评交原件的KTK',()=>assert.ok(!filterEvents(events,{mail:'no',includeUnknown:true},now).some(e=>e.id==='ktk26')));
+test('实际数据：观察目录可单独隐藏',()=>{const list=filterEvents(events,{excludeObserved:true},now);assert.equal(list.length,5);assert.ok(list.every(e=>!e.observed));});
+test('实际数据：未开放、日期待核实、已截止不混入正在征集',()=>{const list=filterEvents(events,{status:'open'},now);assert.equal(list.length,5);for(const id of ['creative21','milan27','wzd26'])assert.ok(!list.some(e=>e.id===id));assert.equal(statusOf(events.find(e=>e.id==='creative21'),now),'upcoming');});
+test('实际数据：严格模式不会把未证实的免外出条件算作符合',()=>assert.equal(filterEvents(events,{...mine,includeUnknown:false},now).length,0));
+test('实际数据：明确免费与院校免审核条件取交集',()=>assert.deepEqual(filterEvents(events,{status:'open',free:true,noSchool:true},now).map(e=>e.id),['silk21','xyj26','guochao21']));
+test('实际数据：截止区间包含边界且未知日期始终被排除',()=>assert.deepEqual(filterEvents(events,{after:'2026-10-26',before:'2026-10-26'},now).map(e=>e.id),['ktk26']));
+test('所有赛事都有目录原条目、核验日期、理由、提交清单和HTTPS来源',()=>{assert.equal(new Set(events.map(e=>e.id)).size,events.length);for(const e of events){assert.ok(catalog.rows.some(r=>r.n===e.catalogN),e.id);assert.ok(e.sources.length&&e.reasons.length&&e.submission.length&&e.flags.length,e.id);assert.equal(e.checkedAt,'2026-10-18');for(const s of e.sources){assert.equal(new URL(s.url).protocol,'https:');assert.ok(s.supports.length>5);}}});
+test('页面必须有与交互代码对应的控件及原生对话框',()=>{const html=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');for(const id of ['status','recognition','individual','online','travel','mail','free','noSchool','excludeObserved','includeUnknown','after','before','search','sort','event-grid','compare-tray','detail-dialog','compare-dialog','catalog-rows','calendar-list','import-file'])assert.ok(html.includes(`id="${id}"`),id);assert.equal((html.match(/<dialog /g)||[]).length,3);assert.ok(html.includes('noindex,nofollow'));});

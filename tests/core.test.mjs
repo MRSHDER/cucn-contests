@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {filterEvents,statusOf,deadlineInstant,rankEvents,selectionChange} from '../public/core.mjs';
+const now=new Date('2026-10-18T06:13:00+08:00');
+const base={id:'good',title:'海报创意',tags:['海报'],level:'A2',observed:false,start:'2026-10-01',deadline:'2026-11-01',deadlineTime:null,individual:'yes',online:'yes',travel:'no',mail:'no',fee:0,schoolGate:false,recognitionScope:'main'};
+const pool=[base,{...base,id:'travel',travel:'required'},{...base,id:'unknown',travel:'unknown',mail:'unknown'},{...base,id:'obs',observed:true},{...base,id:'closed',deadline:'2026-09-01'},{...base,id:'soon',start:'2026-10-20'},{...base,id:'team',individual:'no'},{...base,id:'post',mail:'conditional'},{...base,id:'level',level:'C1'}];
+test('组合条件采用交集，确定需外出答辩的赛事被排除',()=>{const ids=filterEvents(pool,{status:'open',individual:'yes',online:'yes',travel:'no',excludeObserved:true,includeUnknown:true},now).map(x=>x.id);assert.deepEqual(ids,['good','unknown','post','level']);});
+test('严格模式排除未知流程，且免寄送排除条件性寄送',()=>{const ids=filterEvents(pool,{status:'open',individual:'yes',travel:'no',mail:'no',excludeObserved:true,includeUnknown:false},now).map(x=>x.id);assert.deepEqual(ids,['good','level']);});
+test('未开始和已截止分别识别',()=>{assert.equal(statusOf(pool[5],now),'upcoming');assert.equal(statusOf(pool[4],now),'closed');});
+test('北京时间精确截稿边界，时间未知按当天结束分类并保留精度',()=>{assert.equal(statusOf({...base,deadline:'2026-10-18',deadlineTime:'17:00'},new Date('2026-10-18T16:59:59+08:00')),'open');assert.equal(statusOf({...base,deadline:'2026-10-18',deadlineTime:'17:00'},new Date('2026-10-18T17:00:00+08:00')),'closed');assert.equal(deadlineInstant({...base,deadline:'2026-10-18'}),Date.parse('2026-10-18T23:59:59.999+08:00'));});
+test('未知截止时间不能归入确定可报名',()=>{assert.equal(statusOf({...base,deadline:null},now),'unverified');assert.equal(filterEvents([{...base,deadline:null}],{status:'open'},now).length,0);});
+test('关键词、级别和创作方向能够联合筛选',()=>{assert.deepEqual(filterEvents(pool,{q:'海报',levels:['C1'],tags:['海报']},now).map(x=>x.id),['level']);assert.equal(filterEvents(pool,{q:'不存在'},now).length,0);});
+test('截止日期排序将未知日期置后',()=>{assert.deepEqual(rankEvents([{...base,id:'late',deadline:'2027-01-01'},{...base,id:'none',deadline:null},{...base,id:'early',deadline:'2026-11-01'}],'deadline',now).map(x=>x.id),['early','late','none']);});
+test('对比去重，最多四项，支持移除',()=>{assert.deepEqual(selectionChange(['a'],'a'),[]);assert.deepEqual(selectionChange(['a','b','c','d'],'e'),['a','b','c','d']);assert.deepEqual(selectionChange(['a','b'],'c'),['a','b','c']);});
