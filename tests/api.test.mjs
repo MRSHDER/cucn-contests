@@ -1,11 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {handleAPI} from '../server/api.mjs';
+import {handleAPI as rawHandleAPI} from '../server/api.mjs';
 import {scanSource,textFromHTML} from '../server/collector.mjs';
 import {initialState,saveState,loadState,recordScans} from '../server/state.mjs';
 class Bucket{constructor(){this.body=null;this.version=0;}async get(){return this.body===null?null:{etag:String(this.version),text:async()=>this.body};}async put(key,body,options){if(options.onlyIf.etagMatches&&options.onlyIf.etagMatches!==String(this.version))return null;if(options.onlyIf.etagDoesNotMatch==='*'&&this.body!==null)return null;this.body=body;this.version++;return {etag:String(this.version)};}}
 const origin='https://notebook.example.chatgpt.site';
-const post=(path,body,headers={})=>new Request(origin+path,{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
+const TOKEN='test-admin-token-0123456789';
+// 已有用例模拟“已配置管理员令牌且请求携带正确令牌”的部署；授权本身另有专门用例。
+const handleAPI=(request,bucket)=>rawHandleAPI(request,bucket,{adminToken:TOKEN});
+const post=(path,body,headers={})=>new Request(origin+path,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+TOKEN,...headers},body:JSON.stringify(body)});
 test('API实际写入后快照读回相同run与revision，重复请求幂等',async()=>{const bucket=new Bucket();const body={revision:0,runId:'verify-no-change-1',summary:'已核验，无确认变更',patches:[]};let r=await handleAPI(post('/api/updates',body),bucket);assert.equal(r.status,200);r=await handleAPI(new Request(origin+'/api/snapshot'),bucket);const s=await r.json();assert.equal(s.revision,1);assert.equal(s.runs[0].id,body.runId);await handleAPI(post('/api/updates',body),bucket);assert.equal((await loadState(bucket)).state.runs.length,1);});
 test('跨站请求拒绝写入，缺失JSON媒体类型拒绝写入',async()=>{const bucket=new Bucket();assert.equal((await handleAPI(post('/api/updates',{}, {origin:'https://evil.example'}),bucket)).status,403);assert.equal((await handleAPI(new Request(origin+'/api/updates',{method:'POST',body:'{}'}),bucket)).status,415);assert.equal(bucket.body,null);});
 test('R2竞争写入只能一个成功，保护新数据',async()=>{const b=new Bucket();await saveState(b,initialState(),null);const a=await loadState(b),c=await loadState(b);a.state.revision=1;await saveState(b,a.state,a.etag);await assert.rejects(saveState(b,c.state,c.etag),/版本冲突/);assert.equal((await loadState(b)).state.revision,1);});
@@ -39,4 +42,17 @@ test('核验接口说明明确正文版本和队列合同',async()=>{
   assert.ok(instructions.schema.sourceReviews[0].contentHash);
   assert.ok(instructions.schema.patches[0].evidence[0].contentHash);
   assert.ok(instructions.archiveContract);
+});
+
+test('写入授权：未配置令牌时写入关闭，错误或缺失令牌拒绝，读取公开',async()=>{
+  const bucket=new Bucket();const body={revision:0,runId:'verify-auth-1',summary:'授权测试',patches:[]};
+  const bare=(headers={})=>new Request(origin+'/api/updates',{method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(body)});
+  for(const adminToken of [undefined,'','short'])assert.equal((await rawHandleAPI(post('/api/updates',body),bucket,{adminToken})).status,403);
+  assert.equal((await rawHandleAPI(bare(),bucket,{adminToken:TOKEN})).status,401);
+  assert.equal((await rawHandleAPI(bare({Authorization:'Bearer wrong-token-0123456789'}),bucket,{adminToken:TOKEN})).status,401);
+  assert.equal((await rawHandleAPI(bare({Authorization:'Basic '+TOKEN}),bucket,{adminToken:TOKEN})).status,401);
+  for(const path of ['/api/refresh','/api/schedule-status'])assert.equal((await rawHandleAPI(new Request(origin+path,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}),bucket,{adminToken:TOKEN})).status,401);
+  assert.equal(bucket.body,null,'未授权请求不能写入任何数据');
+  assert.equal((await rawHandleAPI(new Request(origin+'/api/snapshot'),bucket,{})).status,200,'访客无需令牌即可读取');
+  assert.equal((await rawHandleAPI(bare({Authorization:'Bearer '+TOKEN}),bucket,{adminToken:TOKEN})).status,200);
 });

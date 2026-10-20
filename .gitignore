@@ -54,3 +54,7 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
+
+# local secrets (wrangler)
+.dev.vars
+.dev.vars.*
